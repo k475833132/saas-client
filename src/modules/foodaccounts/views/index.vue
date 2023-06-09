@@ -11,13 +11,25 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeMount } from "vue";
 import { useCrud } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 
 const { service } = useCool();
 
 // cl-crud
-const Crud = useCrud({ service: service.base.sys.role }, (app) => {
+const Crud = useCrud({ service: service.foodaccount.foodaccount }, (app) => {
 	app.refresh();
+});
+
+function foodList() {
+	service.foodaccount.foodaccount.page({ size: 20, page: 1 }).then((res) => {
+		console.log(res, "res");
+	});
+}
+
+onBeforeMount(() => {
+	console.log("查看一下走没走这个接口");
+	foodList();
 });
 </script>

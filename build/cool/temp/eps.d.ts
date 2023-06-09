@@ -511,6 +511,77 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface FoodAccountEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 大米
+		 */
+		foodRice?: number;
+		/**
+		 * 面粉
+		 */
+		foodFlour?: number;
+		/**
+		 * 食用油
+		 */
+		foodOil?: number;
+		/**
+		 * 干货/调味品
+		 */
+		condiment?: number;
+		/**
+		 * 牛奶
+		 */
+		milk?: number;
+		/**
+		 * 肉类
+		 */
+		meat?: number;
+		/**
+		 * 鱼类
+		 */
+		fish?: number;
+		/**
+		 * 面点类
+		 */
+		pastry?: number;
+		/**
+		 * 蔬菜
+		 */
+		vegetable?: number;
+		/**
+		 * 燃气
+		 */
+		gas?: number;
+		/**
+		 * 水电
+		 */
+		electricity?: number;
+		/**
+		 * 管理费
+		 */
+		managementFee?: number;
+		/**
+		 * 其他
+		 */
+		other?: number;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface IotDeviceEntity {
 		/**
 		 * ID
@@ -1985,6 +2056,63 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface FoodaccountFoodaccount {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<FoodAccountEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<FoodAccountEntity[]>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FoodAccountEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface IotDevice {
 		/**
 		 * 删除
@@ -2572,6 +2700,7 @@ declare namespace Eps {
 		cloud: { db: CloudDb; func: { info: CloudFuncInfo; log: CloudFuncLog } };
 		demo: { goods: DemoGoods };
 		dict: { info: DictInfo; type: DictType };
+		foodaccount: { foodaccount: FoodaccountFoodaccount };
 		iot: { device: IotDevice; message: IotMessage; mqtt: IotMqtt };
 		records: { record: RecordsRecord };
 		recycle: { data: RecycleData };
