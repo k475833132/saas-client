@@ -1,14 +1,14 @@
 <template>
 	<cl-crud ref="Crud">
-		<!-- <cl-row>
+		<cl-row>
 			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
 			<cl-search-key />
-		</cl-row> -->
+		</cl-row>
 
-		<!-- <cl-row>
+		<cl-row>
 			<cl-table
 				ref="Table"
 				:default-sort="{
@@ -39,7 +39,7 @@
 					>是否关联上下级</span
 				>
 			</template>
-		</cl-upsert> -->
+		</cl-upsert>
 	</cl-crud>
 </template>
 

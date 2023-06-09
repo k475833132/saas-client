@@ -19,14 +19,14 @@
 
 		<!-- 工具栏 -->
 		<ul class="app-topbar__tools">
-			<auto-menu-btn />
+			<!-- <auto-menu-btn /> -->
 
 			<li>
-				<cl-chat />
+				<!-- <cl-chat /> -->
 			</li>
 
 			<li>
-				<cl-theme />
+				<!-- <cl-theme /> -->
 			</li>
 		</ul>
 
