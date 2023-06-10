@@ -8,7 +8,11 @@
 			<cl-search-key />
 		</cl-row>
 		<cl-row>
-			<cl-table ref="Table" :border="false"></cl-table>
+			<cl-table ref="Table">
+				<template #column-proofPicture="{ scope }">
+					<el-image style="width: 100px; height: 100px" :src="scope.row.proofPicture" :fit="fits" />
+				</template>
+			</cl-table>
 		</cl-row>
 
 		<!-- 新增、编辑 -->
@@ -28,6 +32,8 @@ const recordService = service.records.record;
 
 const formLabelProps = { labelWidth: "160px" };
 
+const fits = ['fill', 'contain', 'cover', 'none', 'scale-down'];
+
 // cl-crud
 const Crud = useCrud(
 	{
@@ -36,7 +42,8 @@ const Crud = useCrud(
 			add: true,
 			delete: true,
 			update: true,
-			info: true
+			info: true,
+			edit: true
 		},
 		onDelete(selection, { next }) {
 			ElMessageBox.confirm(`已选择了${selection.length}项，是否继续？`, "提示", {
@@ -119,8 +126,8 @@ const Table = useTable({
 					props: {
 						src: String
 					},
-					setup(props: any) {
-						return { src: props.src };
+					setup(row: any) {
+						return { src: row.src };
 					},
 					render(ctx: any) {
 						return h(resolveComponent("el-image"));
@@ -134,8 +141,8 @@ const Table = useTable({
 		},
 		{
 			type: "op",
-			width: 150,
-			buttons: ['info', "delete"]
+			width: 250,
+			buttons: ['info', 'edit', 'delete']
 		}
 	]
 });
