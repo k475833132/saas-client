@@ -10,7 +10,11 @@
 		<cl-row>
 			<cl-table ref="Table">
 				<template #column-proofPicture="{ scope }">
-					<el-image style="width: 100px; height: 100px" :src="scope.row.proofPicture" :fit="fits" />
+					<el-image
+						style="width: 100px; height: 100px"
+						:src="scope.row.proofPicture"
+						:fit="fits"
+					/>
 				</template>
 			</cl-table>
 		</cl-row>
@@ -21,10 +25,11 @@
 </template>
 
 <script lang="ts" setup>
-import { h, onBeforeMount, ref, resolveComponent } from "vue";
-import { useTable, useUpsert, useCrud, setFocus } from "@cool-vue/crud";
+import { h, onBeforeMount } from "vue";
+import { useTable, useUpsert, useCrud } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
+import dayjs from "dayjs";
 
 const { service } = useCool();
 
@@ -32,7 +37,7 @@ const recordService = service.records.record;
 
 const formLabelProps = { labelWidth: "160px" };
 
-const fits = ['fill', 'contain', 'cover', 'none', 'scale-down'];
+const fits = ["fill", "contain", "cover", "none", "scale-down"];
 
 // cl-crud
 const Crud = useCrud(
@@ -94,7 +99,7 @@ const Table = useTable({
 			showOverflowTooltip: true,
 			formatter: (row) => {
 				// TODO 需要格式化
-				return row.startingTime;
+				return dayjs(row.startingTime).format("YYYY-MM-DD HH-MM");
 			}
 		},
 		{
@@ -128,7 +133,7 @@ const Table = useTable({
 		{
 			type: "op",
 			width: 250,
-			buttons: ['info', 'edit', 'delete']
+			buttons: ["info", "edit", "delete"]
 		}
 	]
 });
