@@ -35,7 +35,8 @@ const Crud = useCrud(
 		permission: {
 			add: true,
 			delete: true,
-			update: true
+			update: true,
+			info: true
 		},
 		onDelete(selection, { next }) {
 			ElMessageBox.confirm(`已选择了${selection.length}项，是否继续？`, "提示", {
@@ -134,7 +135,7 @@ const Table = useTable({
 		{
 			type: "op",
 			width: 150,
-			buttons: ["delete"]
+			buttons: ['info', "delete"]
 		}
 	]
 });
