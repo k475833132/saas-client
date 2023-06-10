@@ -1,12 +1,12 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
-			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
 			<cl-adv-btn />
 			<cl-export-btn :columns="Table?.columns" />
+			<cl-refresh-btn />
 		</cl-row>
 		<cl-row>
 			<cl-table ref="Table"></cl-table>

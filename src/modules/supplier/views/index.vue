@@ -1,12 +1,12 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
-			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
 			<cl-adv-btn />
 			<cl-export-btn :columns="Table?.columns" />
+			<cl-refresh-btn />
 		</cl-row>
 		<cl-row>
 			<cl-table ref="Table"></cl-table>
@@ -29,11 +29,11 @@ import { ElMessage, ElMessageBox } from "element-plus";
 
 const { service } = useCool();
 
-const sampleService = service.supplier.supplier;
+const supplierService = service.supplier.supplier;
 const formLabelProps = { labelWidth: "160px" };
 
 function fetchList() {
-	sampleService.page({ size: 20, page: 1 }).then((res) => {
+	supplierService.page({ size: 20, page: 1 }).then((res) => {
 		console.log(res, "res");
 	});
 }
@@ -44,7 +44,7 @@ onBeforeMount(() => {
 // cl-crud
 const Crud = useCrud(
 	{
-		service: sampleService,
+		service: supplierService,
 		permission: {
 			add: true,
 			delete: true,

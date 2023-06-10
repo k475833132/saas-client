@@ -1,11 +1,11 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
-			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
 			<cl-search-key />
+			<cl-refresh-btn />
 		</cl-row>
 		<cl-row>
 			<cl-table ref="Table">
@@ -119,21 +119,7 @@ const Table = useTable({
 		},
 		{
 			label: "证图",
-			prop: "proofPicture",
-			component: {
-				vm: {
-					name: "proofPicture",
-					props: {
-						src: String
-					},
-					setup(row: any) {
-						return { src: row.src };
-					},
-					render(ctx: any) {
-						return h(resolveComponent("el-image"));
-					}
-				}
-			}
+			prop: "proofPicture"
 		},
 		{
 			label: "备注",
