@@ -1,23 +1,25 @@
 <template>
-	<cl-crud ref="Crud">
-		<cl-row>
-			<cl-refresh-btn />
-			<cl-add-btn />
-			<cl-multi-delete-btn />
-			<cl-flex1 />
-			<cl-search-key />
-		</cl-row>
-	</cl-crud>
+	<div class="activity">
+		<el-tabs type="card">
+			<el-tab-pane label="入库单">
+				<Enter/>
+			</el-tab-pane>
+			<el-tab-pane label="出库单" lazy>
+				<Out/>
+			</el-tab-pane>
+		</el-tabs>
+	</div>
 </template>
 
 <script lang="ts" name="store-activity" setup>
-import { useCrud } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-
-const { service } = useCool();
-
-// cl-crud
-const Crud = useCrud({ service: service.base.sys.role }, (app) => {
-	app.refresh();
-});
-</script>
+import Out from "./out.vue";
+import Enter from "./enter.vue";
+</script >
+<style lang="scss" scoped>
+	.activity {
+		background-color: var(--el-bg-color);
+		padding: 10px;
+		height: 100%;
+		box-sizing: border-box;
+	}
+</style>
