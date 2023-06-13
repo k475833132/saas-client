@@ -1,11 +1,11 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
-			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
-			<cl-search-key />
+			<cl-export-btn :columns="Table?.columns" />
+			<cl-refresh-btn />
 		</cl-row>
 		<cl-row>
 			<cl-table ref="Table" :border="false"></cl-table>
@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { h, onBeforeMount, reactive } from "vue";
-import { useTable, useUpsert, useCrud } from "@cool-vue/crud";
+import { useTable, useUpsert, useCrud, setFocus } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useDict } from "/$/dict";
@@ -89,8 +89,8 @@ onBeforeMount(() => {
 const Table = useTable({
 	columns: [
 		{
-			type: "selection",
-			width: 60
+			label: "ID",
+			prop: 'id'
 		},
 		{
 			label: "租户名称",
@@ -180,11 +180,10 @@ const Upsert = useUpsert({
 		width: "580px"
 	},
 
-	// // 插件
-	// plugins: [
-	// 	// 自动聚焦
-	// 	setFocus("name")
-	// ],
+	plugins: [
+		// 自动聚焦
+		setFocus("tenantName")
+	],
 
 	// 详情钩子
 	onInfo(data, { next, done }) {

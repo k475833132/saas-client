@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import { h, onBeforeMount, ref, resolveComponent } from "vue";
-import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
+import { useCrud, useTable, useUpsert, setFocus } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { GOODS_TYPE } from '../../../common/enums'
@@ -157,11 +157,10 @@ const Upsert = useUpsert({
 		width: "580px"
 	},
 
-	// // 插件
-	// plugins: [
-	// 	// 自动聚焦
-	// 	setFocus("name")
-	// ],
+	plugins: [
+		// 自动聚焦
+		setFocus("goodsName")
+	],
 
 	// 详情钩子
 	onInfo(data, { next, done }) {

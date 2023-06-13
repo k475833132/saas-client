@@ -3,6 +3,8 @@
 * @author kangjianxuan
 */
 
+import { reactive } from "vue";
+
 // 货物类型
 export const GOODS_TYPE = [
     {
@@ -39,7 +41,7 @@ export const GOODS_TYPE = [
     }
 ];
 
-// 收入类型
+// 二级类型
 export const INCOME_TYPE = [
     {
         label: "收入",
@@ -117,5 +119,76 @@ export const OUTCOME_TYPE = [
         label: "其他",
         value: 0
     }
-]
+];
+
+// 类型
+export const DIC_TYPE = reactive({
+    type: [
+        {
+            label: '支出',
+            value: 1
+        },
+        {
+            label: "收入",
+            value: 0
+        }
+    ]
+});
+
+// 类型
+export const TYPE = [
+    {
+        label: '支出',
+        value: 1
+    },
+    {
+        label: "收入",
+        value: 0
+    }
+];
+
+// DIC评价类型
+export const DIC_EVALUATE_TYPE = reactive({
+    type: [
+        {
+            label: '特优',
+            value: 1,
+            type: "success"
+        },
+        {
+            label: '优',
+            value: 2
+        },
+        {
+            label: '良',
+            value: 3,
+            type: "warning"
+        },
+        {
+            label: '差',
+            value: 4,
+            type: "danger"
+        }
+    ]
+});
+
+// 评价类型
+export const EVALUATE_TYPE = [
+    {
+        label: '特优',
+        value: 1
+    },
+    {
+        label: '优',
+        value: 2
+    },
+    {
+        label: '良',
+        value: 3
+    },
+    {
+        label: '差',
+        value: 4
+    }
+];
 
