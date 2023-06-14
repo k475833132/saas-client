@@ -93,13 +93,15 @@ const Table = useTable({
 			prop: 'content',
 			children: [
 				{
-					label: '货物名称',
-					prop: 'goodsName',
-				},
-				{
 					label: '货物品类',
 					prop: 'goodsType',
-					formatter: row => GOODS_TYPE.find(item => item.value === row.goodsType)!.label
+					formatter: row => row.goodsType?.map(i => {
+						return GOODS_TYPE.find(item => item.value === i)?.label + '， '
+					})
+				},
+				{
+					label: '货物名称',
+					prop: 'goodsName',
 				},
 				{
 					label: '数量',
@@ -166,7 +168,10 @@ const Upsert = useUpsert({
 			props: formLabelProps,
 			component: {
 				name: 'el-select',
-				options: GOODS_TYPE
+				options: GOODS_TYPE,
+				props: {
+					multiple: true
+				}
 			}
 		},
 		{

@@ -103,7 +103,7 @@ const Table = useTable({
 			}
 		},
 		{
-			label: "持续时长（分钟）",
+			label: "持续时长(单位:分钟)",
 			prop: "duration"
 		},
 		{
