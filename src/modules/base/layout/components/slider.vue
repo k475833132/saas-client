@@ -1,8 +1,8 @@
 <template>
 	<div class="app-slider">
 		<div class="app-slider__logo" @click="toHome">
-			<img src="../../static/image/logo.png" />
-			<span style="font-size: 20px;" v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
+			<img src="../../static/image/logo.jpg" />
+			<span style="font-size: 20px; display: block;" v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
 		</div>
 
 		<div class="app-slider__container">
@@ -34,12 +34,15 @@ function toHome() {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 80px;
+		flex-direction: column;
+		height: 180px;
 		cursor: pointer;
 
 		img {
-			height: 30px;
-			width: 30px;
+			margin-top: 20px;
+			height: 100px;
+			width: 130px;
+			border-radius: 8px;
 		}
 
 		span {
@@ -48,11 +51,12 @@ function toHome() {
 			font-size: 26px;
 			margin-left: 10px;
 			white-space: nowrap;
+			margin-top: 20px;
 		}
 	}
 
 	&__container {
-		height: calc(100% - 80px);
+		height: calc(100% - 180px);
 		overflow-y: auto;
 
 		&::-webkit-scrollbar {
