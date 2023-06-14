@@ -1,7 +1,7 @@
 <template>
 	<div class="app-slider">
 		<div class="app-slider__logo" @click="toHome">
-			<img src="../../static/image/logo.jpg" />
+			<img src="/logo.jpg" />
 			<span style="font-size: 20px; display: block;" v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
 		</div>
 
