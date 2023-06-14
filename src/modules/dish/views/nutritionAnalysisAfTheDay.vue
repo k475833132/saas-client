@@ -8,7 +8,11 @@
 			<cl-search-key />
 		</cl-row>
 		<cl-row>
-			<cl-table ref="Table" :span-method="objectSpanMethod"></cl-table>
+			<cl-table
+				ref="Table"
+				style="max-height: none"
+				:span-method="objectSpanMethod"
+			></cl-table>
 		</cl-row>
 		<cl-row>
 			<cl-flex1 />
@@ -19,16 +23,13 @@
 	</cl-crud>
 </template>
 
-<script lang="ts" name="dish-manage" setup>
+<script lang="ts" setup>
 import { useCrud, useTable } from "@cool-vue/crud";
 import { ElMessageBox } from "element-plus";
 import { onBeforeMount } from "vue";
 import { useCool } from "/@/cool";
 
 const { service } = useCool();
-
-const dishesManagementService = service.dish.dishes_management;
-const formLabelProps = { labelWidth: "160px" };
 
 const objectSpan = {
 	mondayLine: 0,
@@ -43,32 +44,35 @@ const objectSpan = {
 	fridayRow: null
 };
 
+const dishesManagementService = service.dish.nutrition_day_analysis;
+const formLabelProps = { labelWidth: "160px" };
+
 function fetchList() {
-	dishesManagementService.page({ size: 100, page: 1 }).then((res) => {
+	dishesManagementService.page({ size: 50, page: 1 }).then((res) => {
 		res.list.forEach((item, index) => {
 			if (item.weekX === "星期一") {
 				objectSpan.mondayLine++;
-				if (objectSpan.mondayRow === null) {
+				if (objectSpan.mondayRow == null) {
 					objectSpan.mondayRow = index;
 				}
 			} else if (item.weekX === "星期二") {
 				objectSpan.tuesdayLine++;
-				if (objectSpan.tuesdayRow === null) {
+				if (objectSpan.tuesdayRow == null) {
 					objectSpan.tuesdayRow = index;
 				}
 			} else if (item.weekX === "星期三") {
 				objectSpan.wednesdayLine++;
-				if (objectSpan.wednesdayRow === null) {
+				if (objectSpan.wednesdayRow == null) {
 					objectSpan.wednesdayRow = index;
 				}
 			} else if (item.weekX === "星期四") {
 				objectSpan.thursdayLine++;
-				if (objectSpan.thursdayRow === null) {
+				if (objectSpan.thursdayRow == null) {
 					objectSpan.thursdayRow = index;
 				}
 			} else if (item.weekX === "星期五") {
 				objectSpan.fridayLine++;
-				if (objectSpan.fridayRow === null) {
+				if (objectSpan.fridayRow == null) {
 					objectSpan.fridayRow = index;
 				}
 			}
@@ -109,7 +113,7 @@ const Crud = useCrud(
 );
 
 const objectSpanMethod = ({ column, rowIndex, columnIndex }: any) => {
-	if ([0, 1].includes(columnIndex) || column.type === "op") {
+	if ([0].includes(columnIndex) || column.type === "op") {
 		if (rowIndex === objectSpan.mondayRow) {
 			return {
 				rowspan: objectSpan.mondayLine,
@@ -147,52 +151,46 @@ const objectSpanMethod = ({ column, rowIndex, columnIndex }: any) => {
 const Table = useTable({
 	columns: [
 		{
-			type: "selection",
-			width: 60
-		},
-		{
 			label: "日期",
 			prop: "weekX"
 		},
 		{
-			label: "早餐",
-			prop: "breakfast",
-			children: [
-				{
-					label: "食谱",
-					prop: "breakfastRecipe"
-				},
-				{
-					label: "食物",
-					prop: "breakfastFood"
-				},
-				{
-					label: "重量（单位：g）",
-					prop: "breakfastUnit"
-				}
-			]
+			label: "营养",
+			prop: "typeStandard"
 		},
 		{
-			label: "午餐",
-			prop: "lunch",
-			children: [
-				{
-					label: "食谱",
-					prop: "lunchRecipe"
-				},
-				{
-					label: "食物",
-					prop: "lunchFood"
-				},
-				{
-					label: "重量（单位：g）",
-					prop: "lunchUnit"
+			label: "热量（kcal）",
+			prop: "heat",
+			formatter: (row) => {
+				if (row.typeStandard === "在校实给%") {
+					return row.heat + "%";
 				}
-			]
+				return row.heat;
+			}
 		},
 		{
-			label: "归属租户",
-			prop: "tenantId"
+			label: "蛋白质（g）",
+			prop: "protein",
+			formatter: (row) => {
+				if (row.typeStandard === "在校实给%") {
+					return row.protein + "%";
+				}
+				return row.protein;
+			}
+		},
+		{
+			label: "钙（mg）",
+			prop: "calcium",
+			formatter: (row) => {
+				if (row.typeStandard === "在校实给%") {
+					return row.calcium + "%";
+				}
+				return row.calcium;
+			}
+		},
+		{
+			label: "评价",
+			prop: "evaluate"
 		},
 		{
 			type: "op",

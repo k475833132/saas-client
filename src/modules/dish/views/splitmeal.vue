@@ -20,14 +20,14 @@
 </template>
 
 <script lang="ts" name="dish-manage" setup>
-import { useCrud, useTable } from "@cool-vue/crud";
-import { ElMessageBox } from "element-plus";
+import { setFocus, useCrud, useTable, useUpsert } from "@cool-vue/crud";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { onBeforeMount } from "vue";
 import { useCool } from "/@/cool";
 
 const { service } = useCool();
 
-const dishesManagementService = service.dish.dishes_management;
+const dishesManagementService = service.dish.dining_ratio;
 const formLabelProps = { labelWidth: "160px" };
 
 function fetchList() {
@@ -44,8 +44,8 @@ const Crud = useCrud(
 	{
 		service: dishesManagementService,
 		permission: {
-			add: true,
-			delete: true,
+			add: false,
+			delete: false,
 			update: true,
 			info: true,
 			edit: true
@@ -71,64 +71,101 @@ const Crud = useCrud(
 const Table = useTable({
 	columns: [
 		{
-			type: "selection",
-			width: 60
-		},
-		{
 			label: "ID",
 			prop: "id"
 		},
 		{
-			label: "入库时间",
-			prop: "enterTime"
+			label: "配餐均龄（岁）",
+			prop: "cateringAverageAge"
 		},
 		{
-			label: "采购人",
-			prop: "buyer"
+			label: "均龄组",
+			prop: "averageAgeGroup"
 		},
-		{
-			label: "保管时间",
-			prop: "purchaseTime"
-		},
-		{
-			label: "内容",
-			prop: "content",
-			children: [
-				{
-					label: "货物名称",
-					prop: "goodsName"
-				},
-				{
-					label: "货物品类",
-					prop: "goodsType"
-				},
-				{
-					label: "数量",
-					prop: "count"
-				},
-				{
-					label: "单位",
-					prop: "unit"
-				},
-				{
-					label: "供应商",
-					prop: "supplier"
-				},
-				{
-					label: "金额",
-					prop: "price"
-				}
-			]
-		},
-		{
-			label: "附件",
-			prop: "attachment"
-		},
+		// {
+		// 	label: "归属租户",
+		// 	prop: "tenantId"
+		// },
 		{
 			type: "op",
 			width: 250,
 			buttons: ["info", "edit", "delete"]
 		}
 	]
+});
+
+const Upsert = useUpsert({
+	items: [
+		{
+			label: "配餐均龄（岁）",
+			prop: "cateringAverageAge",
+			props: formLabelProps,
+			component: {
+				name: "el-input-number"
+			}
+		},
+		{
+			label: "均龄组",
+			prop: "averageAgeGroup",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		}
+	],
+
+	dialog: {
+		width: "580px"
+	},
+
+	plugins: [
+		// 自动聚焦
+		setFocus("outTime")
+	],
+
+	// 详情钩子
+	onInfo(data, { next, done }) {
+		// 继续请求 info 接口
+		// next({
+		// 	id: data.id
+		// });
+
+		// 直接取列表的数据返回
+		done(data);
+	},
+
+	// 提交钩子
+	onSubmit(data, { next, close, done }) {
+		console.log("onSubmit", data);
+		// 继续请求 update/add 接口
+		next(data);
+	},
+
+	// 打开后
+	onOpened(data) {
+		if (Upsert.value?.mode != "info") {
+			ElMessage.success("编辑中");
+		}
+	},
+
+	// 关闭钩子
+	onClose(action, done) {
+		if (Upsert.value?.mode == "update") {
+			if (action == "close") {
+				return ElMessageBox.confirm("还没填完，确定关闭不？", "提示", {
+					type: "warning"
+				})
+					.then(() => {
+						done();
+						ElMessage.info("好吧");
+					})
+					.catch(() => {
+						ElMessage.success("请继续编辑");
+					});
+			}
+		}
+
+		done();
+	}
 });
 </script>
