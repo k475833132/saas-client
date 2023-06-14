@@ -12,7 +12,15 @@
 			<cl-refresh-btn />
 		</cl-row>
 		<cl-row>
-			<cl-table ref="Table"></cl-table>
+			<cl-table ref="Table" show-summary :summary-method="onSummaryMethod">
+				<template #column-proofPicture="{ scope }">
+					<el-image
+						style="width: 100px; height: 100px"
+						:src="scope.row.proofPicture"
+						:fit="fits"
+					/>
+				</template>
+			</cl-table>
 		</cl-row>
 		<cl-row>
 			<cl-flex1 />
@@ -35,11 +43,17 @@ const { service } = useCool();
 
 const foodAccountsService = service.foodaccount.foodaccount;
 const formLabelProps = { labelWidth: "160px" };
+const fits = ["fill", "contain", "cover", "none", "scale-down"];
 
 function fetchList() {
 	foodAccountsService.page({ size: 20, page: 1 }).then((res) => {
 		console.log(res, "res");
 	});
+}
+
+// 合计
+function onSummaryMethod({ data }: { data: any[] }) {
+	return ['', '总收入', '200' , '总支出', '50', '利润', '150'];
 }
 
 onBeforeMount(() => {
@@ -110,7 +124,8 @@ const Table = useTable({
 		},
 		{
 			label: '金额',
-			prop: 'price'
+			prop: 'price',
+			formatter: row => `￥${row.price}`
 		},
 		{
 			label: '证图',
@@ -185,7 +200,7 @@ const Upsert = useUpsert({
 			props: formLabelProps,
 			component: {
 				name: "el-select",
-				options: []
+				options: INCOME_TYPE
 			}
 		},
 		{

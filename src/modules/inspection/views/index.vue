@@ -84,17 +84,15 @@ const Table = useTable({
 			prop: "employeeName"
 		},
 		{
-			label: "体温",
+			label: "体温（单位：°C）",
 			children: [
 				{
 					label: "晨检",
-					prop: "morningTemp",
-					formatter: row => row.morningTemp + '°C'
+					prop: "morningTemp"
 				},
 				{
 					label: "午检",
-					prop: "afternoonTemp",
-					formatter: row => row.afternoonTemp + '°C'
+					prop: "afternoonTemp"
 				}
 			]
 		},

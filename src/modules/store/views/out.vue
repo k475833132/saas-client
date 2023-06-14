@@ -114,7 +114,7 @@ const Table = useTable({
 					prop: 'supplier'
 				},
 				{
-					label: '金额',
+					label: '金额（单位：元）',
 					prop: 'price'
 				}
 			]
