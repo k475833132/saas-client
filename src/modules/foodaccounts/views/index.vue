@@ -216,7 +216,7 @@ const Upsert = useUpsert({
 			prop: "contact",
 			props: formLabelProps,
 			component: {
-				name: "el-input-number"
+				name: "el-input"
 			}
 		},
 		{
