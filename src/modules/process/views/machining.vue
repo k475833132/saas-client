@@ -1,13 +1,16 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row v-if="props.show">
-			<cl-add-btn/>
+			<cl-add-btn />
 			<cl-multi-delete-btn />
 			<cl-flex1 />
 			<cl-adv-btn />
 			<cl-export-btn :columns="Table?.columns" />
 			<cl-refresh-btn />
 		</cl-row>
+        <cl-row v-else>
+            <h3>出货单ID: xxxx</h3>
+        </cl-row>
 		<cl-row>
 			<cl-table ref="Table"></cl-table>
 		</cl-row>
@@ -22,8 +25,9 @@
 </template>
 
 <script lang="ts" setup>
-import { h, onBeforeMount, ref, resolveComponent, defineExpose, provide } from "vue";
+import { h, onBeforeMount, ref, resolveComponent, defineExpose } from "vue";
 import { useCrud, useTable, useUpsert, useAdvSearch } from "@cool-vue/crud";
+import { defineProps } from 'vue'
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
 
@@ -31,16 +35,16 @@ const props = defineProps({
     show: {
         type: Boolean,
         default: true,
-    }
+    },
 });
 
 const { service } = useCool();
 
-const manifestService = service.process.manifest;
+const machiningService = service.process.machining;
 const formLabelProps = { labelWidth: "160px" };
 
-const fetchList = () => {
-	manifestService.page({ size: 20, page: 1 }).then((res) => {
+function fetchList() {
+	machiningService.page({ size: 20, page: 1 }).then((res) => {
 		console.log(res, "res");
 	});
 }
@@ -53,7 +57,7 @@ defineExpose({fetchList});
 // cl-crud
 const Crud = useCrud(
 	{
-		service: manifestService,
+		service: machiningService,
 		permission: {
 			add: true,
 			delete: true,
@@ -89,25 +93,60 @@ const Table = useTable({
 			prop: "id"
 		},
 		{
-			label: "制造时间",
-			prop: "productDate"
+			label: "归属租户",
+			prop: "company"
 		},
 		{
-			label: "货单内容",
-			children: [
-				{
-					label: '食材名称',
-					prop: 'name'
-				},
-				{
-					label: '数量',
-					prop: 'count'
-				},
-				{
-					label: '单位',
-					prop: 'unit'
-				},
-			]
+			label: "流程名称",
+			prop: "processName"
+		},
+		{
+			label: "负责人",
+			prop: "principal"
+		},
+		{
+			label: "监督人",
+			prop: "supervisor"
+		},
+		{
+			label: '类型',
+			prop: 'type'
+		},
+		{
+			label: '工艺',
+			prop: 'technology'
+		},
+		{
+			label: '外键ID',
+			prop: 'foreignID'
+		},
+		{
+			label: '货品内容',
+			prop: 'goodsContent'
+		},
+		{
+			label: '货物数量',
+			prop: 'goodsCount'
+		},
+		{
+			label: '出品ID',
+			prop: 'productID'
+		},
+		{
+			label: '出品时间',
+			prop: 'productDate'
+		},
+		{
+			label: '出品内容',
+			prop: 'productContent'
+		},
+		{
+			label: '出品数量',
+			prop: 'productCount'
+		},
+		{
+			label: '单位',
+			prop: 'unit'
 		},
 		{
 			type: "op",
@@ -120,7 +159,87 @@ const Table = useTable({
 const Upsert = useUpsert({
 	items: [
 		{
-			label: "制造时间",
+			label: "归属租户",
+			prop: "company",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "流程名称",
+			prop: "processName",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "负责人",
+			prop: "principal",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},  
+		{
+			label: "监督人",
+			prop: "supervisor",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "类型",
+			prop: "type",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "工艺",
+			prop: "technology",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "外键ID",
+			prop: "foreignID",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "货品内容",
+			prop: "goodsContent",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "货物数量",
+			prop: "goodsCount",
+			props: formLabelProps,
+			component: {
+				name: "el-input-number"
+			}
+		},
+		{
+			label: "出品ID",
+			prop: "productID",
+			props: formLabelProps,
+			component: {
+				name: "el-input"
+			}
+		},
+		{
+			label: "出品时间",
 			prop: "productDate",
 			props: formLabelProps,
 			component: {
@@ -128,16 +247,16 @@ const Upsert = useUpsert({
 			}
 		},
 		{
-			label: "食材名称",
-			prop: "name",
+			label: "出品内容",
+			prop: "productContent",
 			props: formLabelProps,
 			component: {
 				name: "el-input"
 			}
 		},
 		{
-			label: "数量",
-			prop: "count",
+			label: "出品数量",
+			prop: "productCount",
 			props: formLabelProps,
 			component: {
 				name: "el-input-number"
@@ -150,7 +269,7 @@ const Upsert = useUpsert({
 			component: {
 				name: "el-input"
 			}
-		}
+		},
 	],
 
 	dialog: {
