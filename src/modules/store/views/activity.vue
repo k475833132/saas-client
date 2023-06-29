@@ -19,7 +19,7 @@ import Enter from "./enter.vue";
 	.activity {
 		background-color: var(--el-bg-color);
 		padding: 10px;
-		height: 100vh;
+		height: 100%;
 		box-sizing: border-box;
 		.card-item {
 			overflow: hidden;

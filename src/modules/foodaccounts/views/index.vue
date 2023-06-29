@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import { h, onBeforeMount, ref, resolveComponent } from "vue";
+import { h, onBeforeMount, ref, resolveComponent, computed } from "vue";
 import { useCrud, useTable, useUpsert, useAdvSearch } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -108,11 +108,19 @@ const Table = useTable({
 		{
 			label: "类型",
 			prop: "type",
-			dic: DIC_TYPE.type
+			dict: DIC_TYPE.type
 		},
 		{
 			label: '二级类型',
-			prop: 'subType'
+			prop: 'subType',
+			formatter: row => {
+				if (row.type) {
+					return OUTCOME_TYPE.find(item => item.value === row.subType)?.label;
+				}
+				else {
+					return INCOME_TYPE.find(item => item.value === row.subType)?.label;
+				}
+			}
 		},
 		{
 			label: '申请人',
@@ -200,7 +208,9 @@ const Upsert = useUpsert({
 			props: formLabelProps,
 			component: {
 				name: "el-select",
-				options: INCOME_TYPE
+				options: computed(() => {
+					return Upsert.value?.getForm().type ? OUTCOME_TYPE : INCOME_TYPE
+				})
 			}
 		},
 		{
@@ -346,9 +356,9 @@ const Upsert = useUpsert({
 		}
 
 		done();
-	}
+	},
 });
-
+console.log('Upsert', Upsert)
 const AdvSearch = useAdvSearch({
 	items: [
 		{

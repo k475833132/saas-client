@@ -41,7 +41,7 @@ export const GOODS_TYPE = [
     }
 ];
 
-// 二级类型
+// 二级类型 => 收入类型
 export const INCOME_TYPE = [
     {
         label: "收入",
@@ -65,10 +65,10 @@ export const INCOME_TYPE = [
     }
 ];
 
-// 支出类型
+// 二级类型 => 支出类型
 export const OUTCOME_TYPE = [
     {
-        label:  "大米",
+        label: "大米",
         value: 1
     },
     {
@@ -122,32 +122,26 @@ export const OUTCOME_TYPE = [
 ];
 
 // 类型
-export const DIC_TYPE = reactive({
-    type: [
-        {
-            label: '支出',
-            value: 1
-        },
-        {
-            label: "收入",
-            value: 0
-        }
-    ]
-});
-
-// 类型
 export const TYPE = [
     {
         label: '支出',
-        value: 1
+        value: 1,
+        type: "danger"
+
     },
     {
         label: "收入",
-        value: 0
+        value: 0,
+        type: "success"
     }
 ];
 
-// DIC评价类型
+// DICT类型
+export const DIC_TYPE = reactive({
+    type: TYPE
+});
+
+// DICT评价类型
 export const DIC_EVALUATE_TYPE = reactive({
     type: [
         {
